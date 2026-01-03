@@ -64,6 +64,62 @@
     }
 
 
+/* ===============================
+   RIGHT CLICK DISABLE
+================================ */
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+});
+
+
+/* ===============================
+   KEYBOARD SHORTCUT BLOCK
+================================ */
+document.addEventListener('keydown', function (e) {
+    if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") ||
+        (e.ctrlKey && e.key.toLowerCase() === "u")
+    ) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+
+/* ===============================
+   DEVTOOLS DETECT + 30s RELOAD
+================================ */
+let devtoolsOpened = false;
+
+setInterval(() => {
+    const start = performance.now();
+    debugger;
+    const end = performance.now();
+
+    if (end - start > 100) {
+        if (!devtoolsOpened) {
+            devtoolsOpened = true;
+
+            console.clear();
+            console.log("⚠ DevTools detected. Page will reload in 30 seconds.");
+
+            setTimeout(() => {
+                location.reload();
+            }, 30000);
+        }
+    }
+}, 1000);
+
+
+/* ===============================
+   DISABLE TEXT SELECTION
+================================ */
+document.addEventListener('selectstart', function (e) {
+    e.preventDefault();
+});
+
     // Overlay
     const overlay = document.querySelector(".tp-offcanvas-overlay");
 
